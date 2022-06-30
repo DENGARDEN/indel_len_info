@@ -130,3 +130,5 @@ dmypy.json
 
 # source file directory
 results/
+
+*.tsv

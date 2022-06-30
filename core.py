@@ -10,7 +10,7 @@ COLBARCODENAME = "Barcode"
 COLINFONAME = "Info"
 # debug
 DEBUG = True
-DEBUGFILE = "test.csv"
+DEBUGFILE = "GFLAS_UAR_gf_Final_indel_result.tsv"
 
 
 # TODO: Recursive file search functionality
@@ -18,6 +18,9 @@ DEBUGFILE = "test.csv"
 
 class LengthAnalyzer():
     def __init__(self):
+        if not os.path.exists(RESULTSPATH):
+            os.mkdir(RESULTSPATH)
+
         if DEBUG:
             self.path = os.path.join(RESULTSPATH, DEBUGFILE)
         else:
@@ -140,7 +143,7 @@ class LengthAnalyzer():
                 elif mt_type == "D":  # Deletions
                     deletions.append(item)
 
-            ins_ratios[barcode] = len(insertions) / (len(insertions) + len(deletions))
+            ins_ratios[barcode] = sum([getattr(occ, "ratio") for occ in insertions]) / 100.0
             del_ratios[barcode] = 1 - ins_ratios[
                 barcode]  # Repeated floating point calculations can hamper the performance 
 
